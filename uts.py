@@ -26,7 +26,7 @@ st.write("----------------------------------------------------------------------
 st.write("**Nama  : Ovadilla Aisyah Rahma**")
 st.write("**NIM   : 200411100033**")
 st.write("-------------------------------------------------------------------------------------------------------------------------")
-upload_data, preporcessing, modeling, implementation = st.tabs(["Upload Data", "Preprocessing", "Modeling", "Implementation"])
+upload_data, preporcessing, modeling = st.tabs(["Upload Data", "Preprocessing", "Modeling"])
 
 
 with upload_data:
@@ -78,8 +78,8 @@ with preporcessing :
 
 with modeling:
     st.write("""# Modeling""")
-    training, test = train_test_split(scaled_features,test_size=0.2, random_state=42)#Nilai X training dan Nilai X testing
-    training_label, test_label = train_test_split(y, test_size=0.2, random_state=42)#Nilai Y training dan Nilai Y testing
+    training, test = train_test_split(scaled_features,test_size=0.2, random_state=1)#Nilai X training dan Nilai X testing
+    training_label, test_label = train_test_split(y, test_size=0.2, random_state=1)#Nilai Y training dan Nilai Y testing
     with st.form("modeling"):
         st.write("Pilihlah model yang akan dilakukan pengecekkan akurasi:")
         naive = st.checkbox('Gaussian Naive Bayes')
@@ -156,45 +156,3 @@ with modeling:
             )
             st.altair_chart(chart,use_container_width=True)
   
-with implementation:
-    st.write("""# Implementasi""")
-    with st.form("my_form"):
-        Age = st.number_input('Usia')
-        Gender = st.number_input('Jenis Kelamin')
-        Height = st.number_input('Tinggi Badan')
-        Weight = st.number_input('Berat Badan')
-        Ap_hi = st.number_input('Systolic Blood Pressure')
-        Ap_lo = st.number_input('Diastolic Blood Pressure')
-        Cholesterol = st.number_input('Cholesterol')
-        Glucose = st.number_input('Glukosa')
-        Smoke = st.number_input('Smoking')
-        Alco = st.number_input('Alcohol')
-        Active = st.number_input('Physical Activity')
-        model = st.selectbox('Pilihlah model yang akan anda gunakan untuk melakukan prediksi?',
-                ('Gaussian Naive Bayes', 'K-NN', 'Decision Tree'))
-
-        prediksi = st.form_submit_button("Submit")
-        if prediksi:
-            inputs = np.array([
-            Age,Gender,Height,Weight,Ap_hi,Ap_lo,Cholesterol,Glucose,Smoke,Alco,Active
-            ])
-
-            df_min = X.min()
-            df_max = X.max()
-            input_norm = ((inputs - df_min) / (df_max - df_min))
-            input_norm = np.array(input_norm).reshape(1, -1)
-
-            if model == 'Gaussian Naive Bayes':
-                mod = gaussian
-            if model == 'K-NN':
-                mod = knn 
-            if model == 'Decision Tree':
-                mod = dt
-
-            input_pred = mod.predict(input_norm)
-
-
-            st.subheader('Hasil Prediksi')
-            st.write('Menggunakan Pemodelan :', model)
-
-            st.write(input_pred)
