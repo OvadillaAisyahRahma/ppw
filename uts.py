@@ -47,7 +47,7 @@ with preporcessing :
     """)
     df = df.drop(columns=['Dokumen'])
     #Mendefinisikan Varible X dan Y
-    X = df.drop(columns=['Topik 1'])
+    X = df.drop(columns=['Label'])
     y = df['Cluster'].values
     df
     X
@@ -67,10 +67,10 @@ with preporcessing :
     st.write(scaled_features)
 
     st.subheader('Target Label')
-    dumies = pd.get_dummies(df.cardio).columns.values.tolist()
+    dumies = pd.get_dummies(df.Cluster).columns.values.tolist()
     dumies = np.array(dumies)
 
-    labels = pd.get_dummies(df.cardio).columns.values.tolist()
+    labels = pd.get_dummies(df.Cluster).columns.values.tolist()
 
     st.write(labels)
 
