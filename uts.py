@@ -34,7 +34,7 @@ with upload_data:
     st.write("Dataset yang digunakan dari PTA Trunojoyo Madura yang sudah dikelola dengan label (Komputasi dan RPL) dan dilakukan pemodelan. Dataset yang dihasilkan yaitu dataset LDA K-Means")
     uploaded_files = st.file_uploader("Upload file CSV", accept_multiple_files=True)
     for uploaded_file in uploaded_files:
-        df = pd.read_csv(uploaded_file, sep=';')
+        df = pd.read_csv(uploaded_file)
         st.write("Nama File Anda = ", uploaded_file.name)
         st.dataframe(df)
 
