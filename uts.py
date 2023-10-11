@@ -45,7 +45,7 @@ with preporcessing :
     - min = nilai minimum semua data asli
     - max = nilai maksimum semua data asli
     """)
-    df = df.drop(columns=["Dokumen"])
+    df = df.drop(columns=['Topik 1', 'Topik 2', 'Topik 3', 'Topik 4', 'Topik 5', 'Topik 6'])
     #Mendefinisikan Varible X dan Y
     X = df.drop(columns=['Cluster'])
     y = df['Cluster'].values
