@@ -39,9 +39,6 @@ with upload_data:
         st.dataframe(df)
 
 with desc:
-#    st.write("""# Deskripsi""")
-#    st.write("Dataset ini adalah dataset menengenai penyakit cardiovascular. Kardiovaskular atau Cardiovascular Disease (CVD) merupakan penyakit yang berkaitan dengan jantung dan pembuluh darah. Pada dataset ini terdapat 70.000 data.")
-#    st.write("Dataset ini diambil dari https://www.kaggle.com/code/ekramasif/cardiovasculardiseasepredictionusingml")
     st.subheader("""Fitur""")
     st.write("[1].  Age")
     st.write("[2].  Height")
@@ -59,22 +56,16 @@ with desc:
     st.write("Source Code dapat diakses melalui https://github.com/Dhitaaprilia/DataminingApp.git")
 
 with preporcessing :
-    st.write("""# Preprocessing""")
-    st.subheader("""Normalisasi Data""")
-    st.write("""Rumus Normalisasi Data :""")
-    from PIL import Image
-    image = Image.open('rumus.jpeg')
-    st.image(image, use_column_width=False, width=250)
     st.markdown("""
     Dimana :
     - X = data yang akan dinormalisasi atau data asli
     - min = nilai minimum semua data asli
     - max = nilai maksimum semua data asli
     """)
-    df = df.drop(columns=["id"])
+    df = df.drop(columns=["Dokumen"])
     #Mendefinisikan Varible X dan Y
-    X = df.drop(columns=['cardio'])
-    y = df['cardio'].values
+    X = df.drop(columns=['Cluster'])
+    y = df['Cluster'].values
     df
     X
     df_min = X.min()
