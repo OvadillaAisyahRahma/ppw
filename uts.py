@@ -39,6 +39,8 @@ with upload_data:
         st.dataframe(df)
 
 with preporcessing :
+    st.write("""# Preprocessing""")
+    st.subheader("""Normalisasi Data""")
     st.markdown("""
     Dimana :
     - X = data yang akan dinormalisasi atau data asli
