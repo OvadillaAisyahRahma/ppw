@@ -120,24 +120,33 @@ with modeling:
         #print("Akurasi Naive Bayes:", accurac)
                 
         #KNN
-        X_train = df[['Topik 1', 'Topik 2', 'Topik 3', 'Topik 4', 'Topik 5', 'Topik 6']]
-        y_train = df['Cluster']
-        from sklearn.model_selection import train_test_split
         from sklearn.neighbors import KNeighborsClassifier
-        
-        X_train, X_test, y_train, y_test = train_test_split(X_train, df['Cluster'], test_size=0.2, random_state=42)
-        knn.fit(X_train, y_train)
-        y_pred = knn.predict(X_test)
-
+        from sklearn.model_selection import train_test_split
         from sklearn.metrics import accuracy_score, classification_report
-
-        accuracy_knn = accuracy_score(y_test, y_pred)
-        #print(f'Accuracy: {accuracy}')
         
+        # Data contoh: 'Cluster' adalah label yang berasal dari kelompok K-Means
+        X = df[['Topik 1', 'Topik 2', 'Topik 3', 'Topik 4', 'Topik 5']]
+        y = df['Cluster']
+        
+        # Bagi data menjadi data pelatihan dan data pengujian
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        
+        # Inisialisasi model K-Nearest Neighbors (KNN) dengan n_neighbors=3
+        knn_classifier = KNeighborsClassifier(n_neighbors=3)
+        
+        # Latih model dengan data pelatihan
+        knn_classifier.fit(X_train, y_train)
+        
+        # Lakukan prediksi menggunakan data pengujian
+        y_pred = knn_classifier.predict(X_test)
+        
+        # Evaluasi model
+        accuracy_knn = accuracy_score(y_test, y_pred)
         report = classification_report(y_test, y_pred)
-        #print(report)
-
-
+        
+        # Tampilkan hasil
+        #print("Akurasi: {:.2f}%".format(accuracy * 100))
+        #print("\nLaporan Klasifikasi:\n", report)
 
 
         #Decission Tree
