@@ -89,7 +89,7 @@ with modeling:
 
         #NaiveBayes
         X = df[['Topik 1', 'Topik 2', 'Topik 3', 'Topik 4', 'Topik 5', 'Topik 6']]
-        y_train = df['Cluster']
+        y = df['Cluster']
         
         # Bagi data menjadi data pelatihan dan data pengujian
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
