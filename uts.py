@@ -120,12 +120,12 @@ with modeling:
         #print("Akurasi Naive Bayes:", accurac)
                 
         #KNN
-        X = df[['Topik 1', 'Topik 2', 'Topik 3', 'Topik 4', 'Topik 5', 'Topik 6']]
+        X_train = df[['Topik 1', 'Topik 2', 'Topik 3', 'Topik 4', 'Topik 5', 'Topik 6']]
         y_train = df['Cluster']
         from sklearn.model_selection import train_test_split
         from sklearn.neighbors import KNeighborsClassifier
         
-        X_train, X_test, y_train, y_test = train_test_split(X, df['Cluster'], test_size=0.2, random_state=42)
+        X_train, X_test, y_train, y_test = train_test_split(X_train, df['Cluster'], test_size=0.2, random_state=42)
         knn.fit(X_train, y_train)
         y_pred = knn.predict(X_test)
 
