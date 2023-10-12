@@ -69,7 +69,7 @@ with preporcessing :
     st.write(scaled_features)
 
     st.subheader('Target Label')
-    dumies = pd.get_dummies(df.Label]).columns.values.tolist()
+    dumies = pd.get_dummies(df.Label).columns.values.tolist()
     dumies = np.array(dumies)
 
     labels = pd.get_dummies(df.Label).columns.values.tolist()
