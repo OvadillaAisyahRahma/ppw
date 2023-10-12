@@ -88,8 +88,8 @@ with modeling:
         submitted = st.form_submit_button("Submit")
 
         #NaiveBayes
-        X_train = output_proporsi_TD[['Topik 1', 'Topik 2', 'Topik 3', 'Topik 4', 'Topik 5', 'Topik 6']]
-        y_train = output_proporsi_TD['Cluster']
+        X_train = df[['Topik 1', 'Topik 2', 'Topik 3', 'Topik 4', 'Topik 5', 'Topik 6']]
+        y_train = df['Cluster']
         
         # Bagi data menjadi data pelatihan dan data pengujian
         X_train, X_test, y_train, y_test = train_test_split(X_train, y_train, test_size=0.2, random_state=42)
@@ -141,7 +141,7 @@ with modeling:
         # gaussian_akurasi = round(100 * accuracy_score(test_label,probas))
 
         #KNN
-        X_train, X_test, y_train, y_test = train_test_split(X, output_proporsi_TD['Cluster'], test_size=0.2, random_state=42)
+        X_train, X_test, y_train, y_test = train_test_split(X, df['Cluster'], test_size=0.2, random_state=42)
         knn.fit(X_train, y_train)
         y_pred = knn.predict(X_test)
         
@@ -153,7 +153,7 @@ with modeling:
 
 
         #Decission Tree
-        X_train, X_test, y_train, y_test = train_test_split(X, output_proporsi_TD['Cluster'], test_size=0.2, random_state=42)
+        X_train, X_test, y_train, y_test = train_test_split(X, df['Cluster'], test_size=0.2, random_state=42)
         
         decision_tree = DecisionTreeClassifier()
         decision_tree.fit(X_train, y_train)
