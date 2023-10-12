@@ -25,9 +25,7 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score, classification_report
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+
 
 st.title("UTS PPW KELAS A (MODELLING)")
 st.write("-------------------------------------------------------------------------------------------------------------------------")
@@ -164,20 +162,22 @@ with modeling:
 
 
         #Decission Tree
-        x = df[['Topik 1', 'Topik 2', 'Topik 3', 'Topik 4', 'Topik 5', 'Topik 6']]
-        y = df['Cluster']
+        from sklearn.tree import DecisionTreeClassifier
+        from sklearn.model_selection import train_test_split
+        from sklearn.metrics import accuracy_score
         
-        X_train, X_test, y_train, y_test = train_test_split(x, y, df['Cluster'], test_size=0.2, random_state=42)
+        X_train, X_test, y_train, y_test = train_test_split(X, df['Cluster'], test_size=0.2, random_state=42)
         
         decision_tree = DecisionTreeClassifier()
         decision_tree.fit(X_train, y_train)
         
         y_pred = decision_tree.predict(X_test)
         
-        accuracy_DT = accuracy_score(y_test, y_pred)
-        #print("Akurasi model Decision Tree:", accuracy)
-        #print("Laporan Klasifikasi:")
-        #print(classification_report(y_test, y_pred))
+        accuracy = accuracy_score(y_test, y_pred)
+        print("Akurasi model Decision Tree:", accuracy)
+        
+        print("Laporan Klasifikasi:")
+        print(classification_report(y_test, y_pred))
 
         if submitted :
             if naive :
