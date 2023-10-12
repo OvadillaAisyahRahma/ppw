@@ -50,7 +50,7 @@ with preporcessing :
     df = df.drop(columns=['Dokumen'])
     #Mendefinisikan Varible X dan Y
     X = df.drop(columns=['Label'])
-    y = df['Cluster'].values
+    y = df['Topik 1', 'Topik 2', 'Topik 3', 'Topik 4', 'Topik 5', 'Topik 6'].values
     df
     X
     df_min = X.min()
@@ -69,10 +69,10 @@ with preporcessing :
     st.write(scaled_features)
 
     st.subheader('Target Label')
-    dumies = pd.get_dummies(df.Cluster).columns.values.tolist()
+    dumies = pd.get_dummies(df.Topik 1, Topik 2, Topik 3, Topik 4, Topik 5, Topik 6).columns.values.tolist()
     dumies = np.array(dumies)
 
-    labels = pd.get_dummies(df.Cluster).columns.values.tolist()
+    labels = pd.get_dummies(df.Topik 1, Topik 2, Topik 3, Topik 4, Topik 5, Topik 6).columns.values.tolist()
 
     st.write(labels)
 
