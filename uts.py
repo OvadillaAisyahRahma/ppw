@@ -96,11 +96,11 @@ with modeling:
         submitted = st.form_submit_button("Submit")
 
         #NaiveBayes
-        X = df[['Topik 1', 'Topik 2', 'Topik 3', 'Topik 4', 'Topik 5', 'Topik 6']]
+        x = df[['Topik 1', 'Topik 2', 'Topik 3', 'Topik 4', 'Topik 5', 'Topik 6']]
         y = df['Cluster']
         
         # Bagi data menjadi data pelatihan dan data pengujian
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
         
         # Inisialisasi model Naive Bayes
         naive_bayes = GaussianNB()
@@ -149,10 +149,10 @@ with modeling:
         # gaussian_akurasi = round(100 * accuracy_score(test_label,probas))
 
         #KNN
-        X = df[['Topik 1', 'Topik 2', 'Topik 3', 'Topik 4', 'Topik 5', 'Topik 6']]
+        x = df[['Topik 1', 'Topik 2', 'Topik 3', 'Topik 4', 'Topik 5', 'Topik 6']]
         y = df['Cluster']
         
-        X_train, X_test, y_train, y_test = train_test_split(X, y, df['Cluster'], test_size=0.2, random_state=42)
+        X_train, X_test, y_train, y_test = train_test_split(x, y, df['Cluster'], test_size=0.2, random_state=42)
         knn.fit(X_train, y_train)
         y_pred = knn.predict(X_test)
         
@@ -164,10 +164,10 @@ with modeling:
 
 
         #Decission Tree
-        X = df[['Topik 1', 'Topik 2', 'Topik 3', 'Topik 4', 'Topik 5', 'Topik 6']]
+        x = df[['Topik 1', 'Topik 2', 'Topik 3', 'Topik 4', 'Topik 5', 'Topik 6']]
         y = df['Cluster']
         
-        X_train, X_test, y_train, y_test = train_test_split(X, y, df['Cluster'], test_size=0.2, random_state=42)
+        X_train, X_test, y_train, y_test = train_test_split(x, y, df['Cluster'], test_size=0.2, random_state=42)
         
         decision_tree = DecisionTreeClassifier()
         decision_tree.fit(X_train, y_train)
