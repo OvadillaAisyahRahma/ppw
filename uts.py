@@ -128,12 +128,22 @@ with modeling:
         knn.fit(X_train, y_train)
         y_pred = knn.predict(X_test)
 
+        from sklearn.metrics import accuracy_score, classification_report
+
+        accuracy_knn = accuracy_score(y_test, y_pred)
+        #print(f'Accuracy: {accuracy}')
+        
+        report = classification_report(y_test, y_pred)
+        #print(report)
+
+
 
 
         #Decission Tree
         from sklearn.tree import DecisionTreeClassifier
         from sklearn.model_selection import train_test_split
         from sklearn.metrics import accuracy_score
+        X = df[['Topik 1', 'Topik 2', 'Topik 3', 'Topik 4', 'Topik 5', 'Topik 6']]
         
         X_train, X_test, y_train, y_test = train_test_split(X, df['Cluster'], test_size=0.2, random_state=42)
         
