@@ -10,6 +10,7 @@ from sklearn import tree
 from sklearn.naive_bayes import GaussianNB
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import confusion_matrix, accuracy_score, recall_score, precision_score, f1_score
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 from sklearn.tree import DecisionTreeClassifier
 from collections import OrderedDict
 from sklearn.neighbors import KNeighborsClassifier
@@ -20,7 +21,13 @@ import altair as alt
 from sklearn.utils.validation import joblib
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-
+from sklearn.naive_bayes import GaussianNB
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score, classification_report
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 
 st.title("UTS PPW KELAS A (MODELLING)")
 st.write("-------------------------------------------------------------------------------------------------------------------------")
