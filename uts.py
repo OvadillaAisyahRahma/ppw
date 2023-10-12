@@ -94,11 +94,16 @@ with modeling:
         submitted = st.form_submit_button("Submit")
 
         #NaiveBayes
-        x = df[['Topik 1', 'Topik 2', 'Topik 3', 'Topik 4', 'Topik 5', 'Topik 6']]
-        y = df['Cluster']
+        from sklearn.naive_bayes import GaussianNB
+        from sklearn.model_selection import train_test_split
+        from sklearn.metrics import accuracy_score
+        
+        # Data pelatihan
+        X_train = df[['Topik 1', 'Topik 2', 'Topik 3', 'Topik 4', 'Topik 5', 'Topik 6']]
+        y_train = df['Cluster']
         
         # Bagi data menjadi data pelatihan dan data pengujian
-        X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
+        X_train, X_test, y_train, y_test = train_test_split(X_train, y_train, test_size=0.2, random_state=42)
         
         # Inisialisasi model Naive Bayes
         naive_bayes = GaussianNB()
@@ -112,53 +117,17 @@ with modeling:
         # Hitung akurasi
         accuracy_gausian = accuracy_score(y_test, y_pred)
         
-        #print("Akurasi Naive Bayes:", accuracy)
-
-        y_pred = naive_bayes.predict(X_test)
-        
-        accuracy_gausian = accuracy_score(y_test, y_pred)
-        #print("Akurasi:", accuracy)
-        #print("Laporan Klasifikasi:")
-        #print(classification_report(y_test, y_pred))
+        #print("Akurasi Naive Bayes:", accurac)
                 
-        # NB
-        #GaussianNB(priors=None)
-
-        # Fitting Naive Bayes Classification to the Training set with linear kernel
-        #gaussian = GaussianNB()
-        #gaussian = gaussian.fit(training, training_label)
-
-        # Predicting the Test set results
-        #y_pred = gaussian.predict(test)
-    
-        #y_compare = np.vstack((test_label,y_pred)).T
-        #gaussian.predict_proba(test)
-        #gaussian_akurasi = round(100 * accuracy_score(test_label, y_pred))
-        # akurasi = 10
-
-        #Gaussian Naive Bayes
-        # gaussian = GaussianNB()
-        # gaussian = gaussian.fit(training, training_label)
-
-        # probas = gaussian.predict_proba(test)
-        # probas = probas[:,1]
-        # probas = probas.round()
-
-        # gaussian_akurasi = round(100 * accuracy_score(test_label,probas))
-
         #KNN
-        x = df[['Topik 1', 'Topik 2', 'Topik 3', 'Topik 4', 'Topik 5', 'Topik 6']]
-        y = df['Cluster']
+        X = df[['Topik 1', 'Topik 2', 'Topik 3', 'Topik 4', 'Topik 5', 'Topik 6']]
+        from sklearn.model_selection import train_test_split
+        from sklearn.neighbors import KNeighborsClassifier
         
-        X_train, X_test, y_train, y_test = train_test_split(x, y, df['Cluster'], test_size=0.2, random_state=42)
+        X_train, X_test, y_train, y_test = train_test_split(X, df['Cluster'], test_size=0.2, random_state=42)
         knn.fit(X_train, y_train)
         y_pred = knn.predict(X_test)
-        
-        accuracy_knn = accuracy_score(y_test, y_pred)
-        #print(f'Accuracy: {accuracy}')
-        
-        report = classification_report(y_test, y_pred)
-        #print(report)
+
 
 
         #Decission Tree
@@ -173,11 +142,11 @@ with modeling:
         
         y_pred = decision_tree.predict(X_test)
         
-        accuracy = accuracy_score(y_test, y_pred)
-        print("Akurasi model Decision Tree:", accuracy)
+        accuracy_DT = accuracy_score(y_test, y_pred)
+        #print("Akurasi model Decision Tree:", accuracy)
         
-        print("Laporan Klasifikasi:")
-        print(classification_report(y_test, y_pred))
+        #print("Laporan Klasifikasi:")
+        #print(classification_report(y_test, y_pred))
 
         if submitted :
             if naive :
