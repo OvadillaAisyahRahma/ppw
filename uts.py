@@ -32,7 +32,7 @@ st.write("----------------------------------------------------------------------
 st.write("**Nama  : Ovadilla Aisyah Rahma**")
 st.write("**NIM   : 200411100033**")
 st.write("-------------------------------------------------------------------------------------------------------------------------")
-upload_data, modeling = st.tabs(["Upload Data", "Modeling"])
+upload_data, modeling, implementasi = st.tabs(["Upload Data", "Modeling", "Implementasi"])
 
 
 with upload_data:
@@ -44,48 +44,8 @@ with upload_data:
         st.write("Nama File Anda = ", uploaded_file.name)
         st.dataframe(df)
 
-#with preporcessing :
-    #st.write("""# Preprocessing""")
-    #st.subheader("""Normalisasi Data""")
-    #st.markdown("""
-    #Dimana :
-    #- X = data yang akan dinormalisasi atau data asli
-    #- min = nilai minimum semua data asli
-    #- max = nilai maksimum semua data asli
-    #""")
-    #df = df.drop(columns=['Dokumen'])
-    #Mendefinisikan Varible X dan Y
-    #X = df.drop(columns=['Label'])
-    #y = df['Cluster'].values
-    #df
-    #X
-    #df_min = X.min()
-    #df_max = X.max()
-    
-    #NORMALISASI NILAI X
-    #scaler = MinMaxScaler()
-    #scaler.fit(features)
-    #scaler.transform(features)
-    #scaled = scaler.fit_transform(X)
-    #features_names = X.columns.copy()
-    #features_names.remove('label')
-    #scaled_features = pd.DataFrame(scaled, columns=features_names)
-
-    #st.subheader('Hasil Normalisasi Data')
-    #st.write(scaled_features)
-
-    #st.subheader('Target Label')
-    #dumies = pd.get_dummies(df.Cluster).columns.values.tolist()
-    #dumies = np.array(dumies)
-
-    #labels = pd.get_dummies(df.Cluster).columns.values.tolist()
-
-    #st.write(labels)
-
 with modeling:
     st.write("""# Modeling""")
-#    training, test = train_test_split(scaled_features,test_size=0.2, random_state=42)#Nilai X training dan Nilai X testing
-#    training_label, test_label = train_test_split(y, test_size=0.2, random_state=42)#Nilai Y training dan Nilai Y testing
     with st.form("modeling"):
         st.write("Pilihlah model yang akan dilakukan pengecekkan akurasi:")
         naive = st.checkbox('Gaussian Naive Bayes')
@@ -116,8 +76,6 @@ with modeling:
         
         # Hitung akurasi
         accuracy_gausian = accuracy_score(y_test, y_pred)
-        
-        #print("Akurasi Naive Bayes:", accurac)
                 
         #KNN
         from sklearn.neighbors import KNeighborsClassifier
@@ -144,11 +102,6 @@ with modeling:
         accuracy_knn = accuracy_score(y_test, y_pred)
         report = classification_report(y_test, y_pred)
         
-        # Tampilkan hasil
-        #print("Akurasi: {:.2f}%".format(accuracy * 100))
-        #print("\nLaporan Klasifikasi:\n", report)
-
-
         #Decission Tree
         from sklearn.tree import DecisionTreeClassifier
         from sklearn.model_selection import train_test_split
@@ -163,10 +116,6 @@ with modeling:
         y_pred = decision_tree.predict(X_test)
         
         accuracy_DT = accuracy_score(y_test, y_pred)
-        #print("Akurasi model Decision Tree:", accuracy)
-        
-        #print("Laporan Klasifikasi:")
-        #print(classification_report(y_test, y_pred))
 
         if submitted :
             if naive :
@@ -196,3 +145,69 @@ with modeling:
             )
             st.altair_chart(chart,use_container_width=True)
   
+with implementasi:
+    st.write("""# Implementasi""")
+    import pandas as pd
+    import numpy as np
+    from sklearn.decomposition import LatentDirichletAllocation
+    from sklearn.naive_bayes import MultinomialNB
+    from sklearn.feature_extraction.text import TfidfVectorizer
+    from sklearn.model_selection import train_test_split
+    from sklearn.metrics import accuracy_score
+
+    # Baca data
+    data_x = pd.read_csv('https://raw.githubusercontent.com/Feb11F/dataset/main/Term%20Frequensi%20Berlabel%20Final.csv')
+    data_x = data_x.dropna(subset=['Dokumen'])  # Menghapus baris yang memiliki NaN di kolom 'Dokumen'
+
+    # Ubah kelas A menjadi 0 dan kelas B menjadi 1
+    kelas_dataset_binary = [0 if kelas == 'RPL' else 1 for kelas in data_x['Label']]
+    data_x['Label'] = kelas_dataset_binary
+
+    # Bagi data menjadi data pelatihan dan data pengujian
+    X = data_x['Dokumen']
+    label = data_x['Label']
+    X_train, X_test, y_train, y_test = train_test_split(X, label, test_size=0.2, random_state=42)
+
+    # Vektorisasi teks menggunakan TF-IDF
+    tfidf_vectorizer = TfidfVectorizer()
+    X_train_tfidf = tfidf_vectorizer.fit_transform(X_train)
+    X_test_tfidf = tfidf_vectorizer.transform(X_test)
+
+    # Latih model Naive Bayes
+    nb_classifier = MultinomialNB()
+    nb_classifier.fit(X_train_tfidf, y_train)
+
+    # Latih model LDA
+    k = 3
+    alpha = 0.1
+    beta = 0.2
+    lda = LatentDirichletAllocation(n_components=k, doc_topic_prior=alpha, topic_word_prior=beta)
+    proporsi_topik_dokumen = lda.fit_transform(X_train_tfidf)
+        
+    import pickle
+    with open('lda.pkl', 'rb') as file:
+        ldaa = pickle.load(file)
+    with open('nb.pkl', 'rb') as file:
+        bayes = pickle.load(file)
+    with open('knn.pkl', 'rb') as file:
+        knn = pickle.load(file)
+
+    with st.form("my_form"):
+        st.subheader("Implementasi")
+        input_dokumen = st.text_input('Masukkan Judul Yang Akan Diklasfifikasi')
+        input_vector = tfidf_vectorizer.transform([input_dokumen])
+        submit = st.form_submit_button("submit")
+        # Prediksi proporsi topik menggunakan model LDA
+        proporsi_topik = lda.transform(input_vector)[0]
+        if submit:
+            st.subheader('Hasil Prediksi')
+            inputs = np.array([input_dokumen])
+            input_norm = np.array(inputs)
+            input_pred = knn.predict(input_vector)[0]
+        # Menampilkan hasil prediksi
+            if input_pred==0:
+                st.success('RPL')
+                st.write(proporsi_topik)
+            else  :
+                st.success('KK')
+                st.write(proporsi_topik)
