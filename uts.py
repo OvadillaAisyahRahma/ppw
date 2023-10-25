@@ -206,8 +206,8 @@ with implementasi:
             input_pred = knn.predict(input_vector)[0]
         # Menampilkan hasil prediksi
             if input_pred==0:
-                st.success('RPL')
+                st.success('Komputasi')
                 st.write(proporsi_topik)
             else  :
-                st.success('KK')
+                st.success('RPL')
                 st.write(proporsi_topik)
